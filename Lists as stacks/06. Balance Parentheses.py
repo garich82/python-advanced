@@ -2,15 +2,17 @@ from collections import deque
 
 text = input()
 stack = deque([x for x in text])
-balanced = True
+open_parentheses = []
 
 while stack:
-    left_end = stack.popleft()
-    right_end = stack.pop()
-    if abs(ord(left_end) - ord(right_end)) > 2:
+    current = stack.popleft()
+    if current in "([{":
+        open_parentheses.append(current)
+    elif len(open_parentheses) == 0:
         print("NO")
-        balanced = False
         break
-
-if balanced:
+    elif open_parentheses.pop() + current not in "()[]{}":
+        print("NO")
+        break
+else:
     print("YES")
