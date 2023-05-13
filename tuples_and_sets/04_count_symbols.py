@@ -9,3 +9,8 @@ for i in range(len(text)):
 for key, value in sorted(unique_letters.items()):
     print(f"{key}: {value} time/s")
 
+
+# occurrences = {}
+#
+# for letter in input():
+#     occurrences[letter] = occurrences.get(letter, 0) + 1
