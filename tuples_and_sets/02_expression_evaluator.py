@@ -3,7 +3,7 @@ from collections import deque
 expression = input().split()
 numbers = deque()
 result = 0
--
+
 for i in range(len(expression)):
     try:
         numbers.append(int(expression[i]))

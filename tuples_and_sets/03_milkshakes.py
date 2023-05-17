@@ -6,19 +6,19 @@ milkshakes = 0
 
 while milkshakes < 5 and chocolates and cups:
     choc = chocolates.pop()
-    while choc < 0 and chocolates:
-        choc = chocolates.pop()
     cup = cups.popleft()
-    while cup < 0 and cups:
-        cup = cups.popleft()
 
-    if cup == choc and cup > 0:
+    if choc <= 0 and cup <= 0:
+        pass
+    elif choc <= 0:
+        cups.appendleft(cup)
+    elif cup <= 0:
+        chocolates.append(choc)
+    elif cup == choc:
         milkshakes += 1
     else:
-        if choc > 0:
-            chocolates.append(choc - 5)
-        if cup > 0:
-            cups.append(cup)
+        chocolates.append(choc - 5)
+        cups.append(cup)
 
 if milkshakes == 5:
     print("Great! You made all the chocolate milkshakes needed!")
