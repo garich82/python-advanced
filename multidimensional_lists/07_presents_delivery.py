@@ -76,4 +76,4 @@ print(*[' '.join(line) for line in neighborhood], sep='\n')  # принтира�
 if total_nice_kids == nice_kids_visited:  # проверяваме дали всички добри деца са получили подаръци
     print(f'Good job, Santa! {nice_kids_visited} happy nice kid/s.')  # принтираме
 else:  # ако не всички добри деца са получили подаръци
-    print(f'No presents for {total_nice_kids - nice_kids_visited} nice kid/s.')  # принтираме
+    print(f'No presents for {total_nice_kids - nice_kids_visited} nice kid/s.')  # принтираме   
