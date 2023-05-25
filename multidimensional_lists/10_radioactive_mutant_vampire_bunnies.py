@@ -62,10 +62,10 @@ player_row, player_col = find_player_position()
 matrix[player_row][player_col] = '.'
 
 for command in commands:
-    player_movement_row, player_movement_col = player_row + directions[command][0], player_col + directions[command][1]
+    player_new_row, player_new_col = player_row + directions[command][0], player_col + directions[command][1]
 
-    if check_valid_index(player_movement_row, player_movement_col, True):
-        player_row, player_col = player_movement_row, player_movement_col
+    if check_valid_index(player_new_row, player_new_col, True):
+        player_row, player_col = player_new_row, player_new_col
 
     bunnies_move(bunnies_positions())
 
