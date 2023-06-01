@@ -1,93 +1,54 @@
 import random
 
-def deal_card():
-    """Returns a random card from the deck."""
-    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-    return random.choice(cards)
 
-def calculate_score(cards):
-    """Takes a list of cards and returns the score calculated from the cards."""
-    # Check for a blackjack (Ace + 10-value card) and return 0 instead of the actual score
-    if sum(cards) == 21 and len(cards) == 2:
-        return 0
+def calculate_damage():
+    hits = sum(random.choices([0, 1], weights=[1/3, 2/3]) for _ in range(18))
+    return hits
 
-    # Check for an Ace and convert it from 11 to 1 if the score exceeds 21
-    if 11 in cards and sum(cards) > 21:
-        cards.remove(11)
-        cards.append(1)
 
-    return sum(cards)
+def calculate_fight():
+    fleet_a_size = int(input("Enter the size of Fleet A: "))
+    fleet_b_size = int(input("Enter the size of Fleet B: "))
 
-def compare(user_score, computer_score):
-    """Compares the final scores of the user and the computer and determines the result of the game."""
-    if user_score > 21 and computer_score > 21:
-        return "You went over. You lose!"
+    fleet_a = [40 for _ in range(fleet_a_size)]
+    fleet_b = [40 for _ in range(fleet_b_size)]
 
-    if user_score == computer_score:
-        return "It's a draw!"
-    elif computer_score == 0:
-        return "Computer has Blackjack. You lose!"
-    elif user_score == 0:
-        return "You have Blackjack. You win!"
-    elif user_score > 21:
-        return "You went over. You lose!"
-    elif computer_score > 21:
-        return "Computer went over. You win!"
-    elif user_score > computer_score:
-        return "You win!"
+    while fleet_a and fleet_b:
+        # Fleet A attacks Fleet B
+        for _ in range(fleet_a_size):
+            if fleet_b:
+                damage = calculate_damage()
+                ship_index = random.randint(0, len(fleet_b) - 1)
+                fleet_b[ship_index] -= damage
+                if fleet_b[ship_index] <= 0:
+                    fleet_b.pop(ship_index)
+
+        # Fleet B attacks Fleet A
+        for _ in range(fleet_b_size):
+            if fleet_a:
+                damage = calculate_damage()
+                ship_index = random.randint(0, len(fleet_a) - 1)
+                fleet_a[ship_index] -= damage
+                if fleet_a[ship_index] <= 0:
+                    fleet_a.pop(ship_index)
+
+    if fleet_a:
+        winner = "Fleet A"
+        winning_fleet = fleet_a
+        losing_fleet = fleet_b
     else:
-        return "You lose!"
+        winner = "Fleet B"
+        winning_fleet = fleet_b
+        losing_fleet = fleet_a
 
-def play_game():
-    print("Welcome to Blackjack!")
-    results = []
+    print("Winner:", winner)
+    print("Number of ships sunk by the winning fleet:", len(losing_fleet))
+    print("Number of ships lost:", len(winning_fleet))
+    print("Ships that survived:")
 
-    while True:
-        # Deal initial cards
-        user_cards = []
-        computer_cards = []
-        is_game_over = False
+    for i, hit_points in enumerate(winning_fleet, start=1):
+        print(f"Ship {i} - {hit_points}/40")
 
-        for _ in range(2):
-            user_cards.append(deal_card())
-            computer_cards.append(deal_card())
 
-        while not is_game_over:
-            user_score = calculate_score(user_cards)
-            computer_score = calculate_score(computer_cards)
-
-            print(f"Your cards: {user_cards}, current score: {user_score}")
-            print(f"Computer's first card: {computer_cards[0]}")
-
-            # Check for a blackjack, user score of 0, or computer score less than 17
-            if user_score == 0 or computer_score == 0 or user_score > 21:
-                is_game_over = True
-            else:
-                should_continue = input("Type 'y' to get another card, or 'n' to pass: ")
-
-                if should_continue == 'y':
-                    user_cards.append(deal_card())
-                else:
-                    is_game_over = True
-
-        # Deal computer's cards
-        while computer_score != 0 and computer_score < 17:
-            computer_cards.append(deal_card())
-            computer_score = calculate_score(computer_cards)
-
-        print(f"Your final hand: {user_cards}, final score: {user_score}")
-        print(f"Computer's final hand: {computer_cards}, final score: {computer_score}")
-        result = compare(user_score, computer_score)
-        print(result)
-        results.append(result)
-
-        print("Game Results:")
-        for index, result in enumerate(results):
-            print(f"Game {index + 1}: {result}")
-
-        play_again = input("Do you want to play again? Type 'y' or 'n': ")
-        if play_again != 'y':
-            break
-
-# Start the game
-play_game()
+# Example usage:
+calculate_fight()
