@@ -29,7 +29,7 @@ MIN_LENGTH = 4
 VALID_DOMAINS = [".com", ".bg", ".net", ".org"]
 
 
-pattern_name = r'^[a-z][a-z0-9_.\'\-]+@'
+pattern_name = r'^[a-z][a-z0-9_.\'\-]+'
 # ^ indicates that the name pattern must be found in the beginning
 # Usernames must start with a letter, can only contain lowercase letters (a-z),
 # numbers (0-9), dashes (-), underscores (_), apostrophes ('), and periods (.)
