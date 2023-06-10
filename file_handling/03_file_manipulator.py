@@ -1,3 +1,9 @@
+# This script provides basic file manipulation operations: Create, Add, Replace, and Delete.
+# Users can interact with the script by entering commands in specified format.
+# The script performs the corresponding file operation based on the entered command and parameters.
+# The program continues to accept user commands until the "End" command is entered.
+
+
 import os
 
 
@@ -42,7 +48,11 @@ def delete_file(file_name):
 
 # Main program starts here
 
-command_input = input()
+print("The input is in the following format: Command-filename-parameter_1-parameter_2")
+print("Available commands are Create, Add, Replace or Delete")
+print("Command 'Add' takes 1 parameter - content to be added")
+print("Command 'Replace' takes 2 parameters - text to be replaced and substitution")
+command_input = input("Type command: ")
 
 while command_input != "End":
     commands = command_input.split('-')
@@ -62,4 +72,4 @@ while command_input != "End":
     else:
         print("Invalid command")
 
-    command_input = input()
+    command_input = input("Type command or 'End' to terminate: ")
